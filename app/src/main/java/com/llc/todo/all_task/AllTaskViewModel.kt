@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llc.todo.database.TaskDao
 import com.llc.todo.database.TaskEntity
+import com.llc.todo.detail_task.DetailTaskEvent
+import com.llc.todo.singleEvent.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -14,22 +16,22 @@ import javax.inject.Inject
 @HiltViewModel
 class AllTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
 
-    private val _taskEvent = MutableLiveData<TaskEvent>()
-    val taskEvent: LiveData<TaskEvent> = _taskEvent
+    private val _taskEvent = MutableLiveData<AllTaskEvent>()
+    val taskEvent: LiveData<AllTaskEvent> = _taskEvent
 
     fun getAllTask(){
         viewModelScope.launch {
             try {
                 val result: List<TaskEntity> = taskDao.getAllTask()
-                _taskEvent.value = TaskEvent.Success(result)
+                _taskEvent.value = AllTaskEvent.Success(result)
             } catch (e: Exception) {
-                _taskEvent.value = TaskEvent.Failure(e.message.toString())
+                _taskEvent.value = AllTaskEvent.Failure(e.message.toString())
             }
         }
     }
 }
 
-sealed class TaskEvent {
-    data class Success(val taskList: List<TaskEntity>) : TaskEvent()
-    data class Failure(val message: String) : TaskEvent()
+sealed class AllTaskEvent {
+    data class Success(val taskList: List<TaskEntity>) : AllTaskEvent()
+    data class Failure(val message: String) : AllTaskEvent()
 }

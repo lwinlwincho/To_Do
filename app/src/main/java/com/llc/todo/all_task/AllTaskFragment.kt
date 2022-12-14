@@ -1,5 +1,6 @@
 package com.llc.todo.all_task
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.database.TaskEntity
@@ -28,6 +28,15 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
             goToDetails(taskEntity)
         }
     }*/
+
+    private val sharedPref by lazy {
+        context?.getSharedPreferences("toDoPreference", Context.MODE_PRIVATE)
+    }
+
+    companion object {
+        const val KEY_CHECK = "key-check"
+    }
+
 
     private val allTaskItemAdapter: AllTaskItemAdapter by lazy {
         AllTaskItemAdapter(this)
@@ -50,14 +59,16 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getCheck()
+
         viewModel.getAllTask()
         viewModel.taskEvent.observe(viewLifecycleOwner) { taskEvent ->
             when (taskEvent) {
 
-                is TaskEvent.Success -> {
+                is AllTaskEvent.Success -> {
                     allTaskItemAdapter.submitList(taskEvent.taskList)
                 }
-                is TaskEvent.Failure -> {
+                is AllTaskEvent.Failure -> {
                     showMessage(taskEvent.message)
                 }
                 else -> {}
@@ -83,12 +94,28 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
             .show()
     }
 
-    override fun onCheck(taskEntity: TaskEntity) {
-        Toast.makeText(requireContext(), taskEntity.title.toString(), Toast.LENGTH_LONG).show()
+    private fun putCheck(isCheck: Boolean) {
+        sharedPref?.edit()?.putBoolean(KEY_CHECK, isCheck)?.apply()
+    }
+
+    private fun getCheck(): Boolean {
+        return sharedPref!!.getBoolean(KEY_CHECK, false)
+    }
+
+    override fun onCheck(taskEntity: TaskEntity, isCheck: Boolean) {
+
+       /* val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean("YOUR_CHECKBOX_KEY", isCheck)
+            apply()
+        }*/
+
+        putCheck(isCheck)
+        Toast.makeText(requireContext(), taskEntity.title.toString()+ "true", Toast.LENGTH_LONG).show()
     }
 
     override fun onCheckDetail(taskEntity: TaskEntity) {
         goToDetails(taskEntity)
-        Toast.makeText(requireContext(), taskEntity.title.toString(), Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), taskEntity.title.toString()+"false", Toast.LENGTH_LONG).show()
     }
 }

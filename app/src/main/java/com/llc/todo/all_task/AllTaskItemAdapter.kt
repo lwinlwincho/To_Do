@@ -9,7 +9,7 @@ import com.llc.todo.database.TaskEntity
 import com.llc.todo.databinding.ItemTaskBinding
 
 interface OnItemClickListener {
-    fun onCheck(taskEntity: TaskEntity)
+    fun onCheck(taskEntity: TaskEntity, isCheck: Boolean)
     fun onCheckDetail(taskEntity: TaskEntity)
 }
 
@@ -37,13 +37,15 @@ class AllTaskItemAdapter(private val onItemClickListener: OnItemClickListener) :
             with(binding) {
                 checkBox.text = taskEntity.title
 
-                checkBox.setOnClickListener() {
-                    if(checkBox.isChecked){
-                        onItemClickListener.onCheck(taskEntity)
-                    }else
-                        onItemClickListener.onCheckDetail(taskEntity)
+                checkBox.setOnCheckedChangeListener() { checkBox, isChecked ->
+                    if (checkBox.isChecked) {
+                        onItemClickListener.onCheck(taskEntity, true)
 
-                   // onItemClickListener.invoke(taskEntity)
+                    } else if (checkBox.isClickable) {
+                        onItemClickListener.onCheckDetail(taskEntity)
+                    }
+
+                    // onItemClickListener.invoke(taskEntity)
                 }
             }
         }

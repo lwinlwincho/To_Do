@@ -9,10 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.llc.todo.R
-import com.llc.todo.all_task.AllTaskFragmentDirections
 import com.llc.todo.database.TaskEntity
-import com.llc.todo.databinding.FragmentAllTaskBinding
 import com.llc.todo.databinding.FragmentDetailTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,9 +43,11 @@ class DetailTaskFragment : Fragment() {
                 is DetailTaskEvent.Failure -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
+                else -> {}
             }
         }
     }
+
 
     private fun bind(item: TaskEntity) {
         with(binding) {

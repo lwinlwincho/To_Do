@@ -17,11 +17,7 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
     private val _detailUIEvent = MutableLiveData<DetailTaskEvent>()
     val detailUIEvent: LiveData<DetailTaskEvent> = _detailUIEvent
 
-    private val _favouriteEvent = MutableLiveData<Event<DetailTaskEvent>>()
-    val favouriteEvent: LiveData<Event<DetailTaskEvent>> = _favouriteEvent
 
-    private val _favouriteStatusEvent = MutableLiveData<Event<Boolean>>()
-    val favouriteStatusEvent: LiveData<Event<Boolean>> = _favouriteStatusEvent
 
     fun getTaskDetail(taskId: String) {
         viewModelScope.launch {
@@ -38,6 +34,4 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
 sealed class DetailTaskEvent {
     data class Success(val taskEntity: TaskEntity) : DetailTaskEvent()
     data class Failure(val message: String) : DetailTaskEvent()
-    data class SuccessUnchecked(val message: String) : DetailTaskEvent()
-    data class SuccessChecked(val message: String) : DetailTaskEvent()
 }
