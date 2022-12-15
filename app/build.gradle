@@ -43,9 +43,6 @@ kapt {
 
 dependencies {
 
-    def preference_version = "1.2.0"
-
-    implementation "androidx.preference:preference-ktx:$preference_version"
 
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.database.TaskEntity
 import com.llc.todo.databinding.FragmentDetailTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +41,9 @@ class DetailTaskFragment : Fragment() {
                 is DetailTaskEvent.Success -> {
                     bind(it.taskEntity)
                 }
+                is DetailTaskEvent.SuccessComplete -> {
+                    showMessage(it.message)
+                }
                 is DetailTaskEvent.Failure -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
@@ -51,7 +55,6 @@ class DetailTaskFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
-
 
     private fun bind(item: TaskEntity) {
 
@@ -70,5 +73,12 @@ class DetailTaskFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    private fun showMessage(message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(message)
+            .setPositiveButton("Ok") { _, _ -> }
+            .show()
     }
 }

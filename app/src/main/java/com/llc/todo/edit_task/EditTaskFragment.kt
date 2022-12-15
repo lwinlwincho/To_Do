@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.database.TaskEntity
 import com.llc.todo.databinding.FragmentEditTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +34,7 @@ class EditTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.showItem(args.id.toInt())
+        viewModel.showTask(args.id.toInt())
 
         viewModel.editUiEvent.observe(viewLifecycleOwner) {
             when (it) {
@@ -43,10 +43,10 @@ class EditTaskFragment : Fragment() {
                 }
                 is EditTaskEvent.SuccessUpdate -> {
                     findNavController().navigateUp()
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    showMessage(it.message)
                 }
                 is EditTaskEvent.Error -> {
-                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
+                    showMessage(it.error)
                 }
             }
         }
@@ -64,6 +64,16 @@ class EditTaskFragment : Fragment() {
         }
     }
 
+    private fun update() {
+        if (isEntryValid()) {
+            viewModel.updateTask(
+                id = args.id,
+                title = binding.etTitle.text.toString(),
+                task = binding.etTask.text.toString()
+            )
+        }
+    }
+
     //return true if the edit text are not empty
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
@@ -72,14 +82,11 @@ class EditTaskFragment : Fragment() {
         )
     }
 
-    private fun update() {
-        if (isEntryValid()) {
-            viewModel.updateItem(
-                id = args.id,
-                title = binding.etTitle.text.toString(),
-                task = binding.etTask.text.toString()
-            )
-        }
+    private fun showMessage(message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(message)
+            .setPositiveButton("Ok") { _, _ -> }
+            .show()
     }
 }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llc.todo.database.TaskDao
 import com.llc.todo.database.TaskEntity
-import com.llc.todo.singleEvent.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +15,6 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
 
     private val _detailUIEvent = MutableLiveData<DetailTaskEvent>()
     val detailUIEvent: LiveData<DetailTaskEvent> = _detailUIEvent
-
-
 
     fun getTaskDetail(taskId: String) {
         viewModelScope.launch {
@@ -32,15 +29,24 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
 
     fun completeTask(taskEntity: TaskEntity) {
         viewModelScope.launch {
-            taskDao.completeTask(
-                id = taskEntity.id,
-                isComplete = taskEntity.isComplete
-            )
+            try {
+                taskDao.completeTask(
+                    id = taskEntity.id,
+                    isComplete = taskEntity.isComplete
+                )
+                if (taskEntity.isComplete)
+                    _detailUIEvent.postValue(DetailTaskEvent.SuccessComplete("Task marked complete!"))
+                else
+                    _detailUIEvent.postValue(DetailTaskEvent.SuccessComplete("Task marked active!"))
+            } catch (e: java.lang.Exception) {
+                _detailUIEvent.postValue(DetailTaskEvent.Failure(e.message.toString()))
+            }
         }
     }
 }
 
 sealed class DetailTaskEvent {
     data class Success(val taskEntity: TaskEntity) : DetailTaskEvent()
+    data class SuccessComplete(val message: String) : DetailTaskEvent()
     data class Failure(val message: String) : DetailTaskEvent()
 }

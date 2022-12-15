@@ -25,12 +25,6 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         AllTaskItemAdapter(this)
     }
 
-    private fun goToDetails(taskEntity: TaskEntity) {
-        val action = AllTaskFragmentDirections
-            .actionAllTaskFragmentToDetailTaskFragment(taskEntity.id)
-        findNavController().navigate(action)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +42,9 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
                 is AllTaskEvent.Success -> {
                     allTaskItemAdapter.submitList(taskEvent.taskList)
+                }
+                is AllTaskEvent.SuccessComplete -> {
+                    if (taskEvent.message.isNotBlank()) showMessage(taskEvent.message)
                 }
                 is AllTaskEvent.Failure -> {
                     showMessage(taskEvent.message)
@@ -81,5 +78,11 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     override fun openDetails(taskEntity: TaskEntity) {
         goToDetails(taskEntity)
+    }
+
+    private fun goToDetails(taskEntity: TaskEntity) {
+        val action = AllTaskFragmentDirections
+            .actionAllTaskFragmentToDetailTaskFragment(taskEntity.id)
+        findNavController().navigate(action)
     }
 }

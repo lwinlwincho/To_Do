@@ -44,6 +44,7 @@ class AllTaskItemAdapter(
                 checkBox.setOnCheckedChangeListener { _, isChecked ->
                     onItemClickListener.onCompleteTask(taskEntity.copy(isComplete = isChecked))
                 }
+
                 tvTitle.setOnClickListener {
                     checkBox.isChecked = checkBox.isChecked == true
                     onItemClickListener.openDetails(taskEntity)

@@ -12,17 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
+
     private var _editUiEvent = MutableLiveData<EditTaskEvent>()
     val editUiEvent: LiveData<EditTaskEvent> = _editUiEvent
 
-    fun isEntryValid(title: String, task: String): Boolean {
-        if (title.isBlank() || task.isBlank() ) {
-            return false
-        }
-        return true
-    }
-
-    fun showItem(id: Int) {
+    fun showTask(id: Int) {
         viewModelScope.launch {
             try {
                 val result = taskDao.getTaskById(id.toLong())
@@ -33,7 +27,14 @@ class EditTaskViewModel @Inject constructor(private val taskDao: TaskDao) : View
         }
     }
 
-    fun updateItem(
+    fun isEntryValid(title: String, task: String): Boolean {
+        if (title.isBlank() || task.isBlank()) {
+            return false
+        }
+        return true
+    }
+
+    fun updateTask(
         id: Long,
         title: String,
         task: String
@@ -41,7 +42,7 @@ class EditTaskViewModel @Inject constructor(private val taskDao: TaskDao) : View
         viewModelScope.launch {
             try {
                 taskDao.updateTask(id, title, task)
-                _editUiEvent.postValue(EditTaskEvent.SuccessUpdate("Success Updated"))
+                _editUiEvent.postValue(EditTaskEvent.SuccessUpdate("Task saved!"))
             } catch (e: Exception) {
                 _editUiEvent.postValue(EditTaskEvent.Error(e.message.toString()))
             }

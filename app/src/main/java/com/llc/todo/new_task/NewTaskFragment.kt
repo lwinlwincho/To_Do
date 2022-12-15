@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.llc.todo.databinding.FragmentAllTaskBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.databinding.FragmentNewTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,27 +30,34 @@ class NewTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.floatingActionButton.setOnClickListener{
+        viewModel.newTaskUiEvent.observe(viewLifecycleOwner) {
+            when (it) {
+                is NewTaskEvent.Success -> {
+                    showMessage(it.message)
+                    findNavController().navigateUp()
+                }
+                is NewTaskEvent.Failure -> {
+                    showMessage(it.message)
+                }
+            }
+        }
+
+        binding.floatingActionButton.setOnClickListener {
             viewModel.addNewTask(
                 title = binding.etTitle.text.toString(),
                 task = binding.etTask.text.toString()
             )
         }
 
-        viewModel.newTaskUiEvent.observe(viewLifecycleOwner) {
-            when (it) {
-                is NewTaskEvent.Success -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                    findNavController().navigateUp()
-                }
-                is NewTaskEvent.Failure -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
         binding.ivBack.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    private fun showMessage(message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(message)
+            .setPositiveButton("Ok") { _, _ -> }
+            .show()
     }
 }
