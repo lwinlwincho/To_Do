@@ -75,7 +75,7 @@ class EditTaskFragment : Fragment() {
     private fun update() {
         if (isEntryValid()) {
             viewModel.updateItem(
-                id = args.id.toInt(),
+                id = args.id,
                 title = binding.etTitle.text.toString(),
                 task = binding.etTask.text.toString()
             )

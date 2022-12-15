@@ -11,5 +11,7 @@ data class TaskEntity(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "task")
-    val task: String
+    val task: String,
+    @ColumnInfo(name = "isComplete")
+    val isComplete: Boolean
 )

@@ -24,7 +24,8 @@ class NewTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewM
             try {
                 val entity = TaskEntity(
                     title = title,
-                    task = task
+                    task = task,
+                    isComplete = false
                 )
                 taskDao.insertTask(entity)
                 _newTaskUiEvent.postValue(NewTaskEvent.Success("Successfully Added!"))

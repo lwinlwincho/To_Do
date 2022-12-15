@@ -19,7 +19,7 @@ class AllTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewM
     private val _taskEvent = MutableLiveData<AllTaskEvent>()
     val taskEvent: LiveData<AllTaskEvent> = _taskEvent
 
-    fun getAllTask(){
+    fun getAllTask() {
         viewModelScope.launch {
             try {
                 val result: List<TaskEntity> = taskDao.getAllTask()
@@ -27,6 +27,15 @@ class AllTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewM
             } catch (e: Exception) {
                 _taskEvent.value = AllTaskEvent.Failure(e.message.toString())
             }
+        }
+    }
+
+    fun completeTask(taskEntity: TaskEntity) {
+        viewModelScope.launch {
+            taskDao.completeTask(
+                id = taskEntity.id,
+                isComplete = taskEntity.isComplete
+            )
         }
     }
 }

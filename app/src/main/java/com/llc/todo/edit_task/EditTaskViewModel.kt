@@ -34,7 +34,7 @@ class EditTaskViewModel @Inject constructor(private val taskDao: TaskDao) : View
     }
 
     fun updateItem(
-        id: Int,
+        id: Long,
         title: String,
         task: String
     ) {

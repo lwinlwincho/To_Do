@@ -82,7 +82,11 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
             .show()
     }
 
-    override fun onCheckDetail(taskEntity: TaskEntity) {
+    override fun onCompleteTask(taskEntity: TaskEntity) {
+        viewModel.completeTask(taskEntity)
+    }
+
+    override fun openDetails(taskEntity: TaskEntity) {
         goToDetails(taskEntity)
     }
 }

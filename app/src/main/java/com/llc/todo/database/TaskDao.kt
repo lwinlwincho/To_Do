@@ -9,7 +9,10 @@ interface TaskDao {
     fun insertTask(item: TaskEntity)
 
     @Query("Update taskEntity Set title=:title ,task=:task Where id=:id")
-    suspend fun updateTask(id: Int, title: String, task: String)
+    suspend fun updateTask(id: Long, title: String, task: String)
+
+    @Query("Update taskEntity Set isComplete=:isComplete Where id=:id")
+    suspend fun completeTask(id: Long, isComplete: Boolean)
 
     @Delete
     fun delete(item: TaskEntity)
