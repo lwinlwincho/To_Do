@@ -49,5 +49,9 @@ class NewTaskFragment : Fragment() {
                 }
             }
         }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ToDo.Headline">
+        <item name="fontFamily">@font/merriweather_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="Theme.ToDo.SubTitle">
+        <item name="fontFamily">@font/mulish_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.ToDo.Body">
+        <item name="fontFamily">@font/mulish_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+</resources>

@@ -26,7 +26,7 @@ class EditTaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEditTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,6 +49,10 @@ class EditTaskFragment : Fragment() {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

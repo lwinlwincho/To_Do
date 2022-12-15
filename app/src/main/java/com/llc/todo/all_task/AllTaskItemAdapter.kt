@@ -1,5 +1,7 @@
 package com.llc.todo.all_task
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,44 +10,70 @@ import androidx.recyclerview.widget.RecyclerView
 import com.llc.todo.database.TaskEntity
 import com.llc.todo.databinding.ItemTaskBinding
 
+
 interface OnItemClickListener {
-    fun onCheck(taskEntity: TaskEntity, isCheck: Boolean)
+    // fun onCheck(taskEntity: TaskEntity, isCheck: Boolean)
     fun onCheckDetail(taskEntity: TaskEntity)
 }
 
-class AllTaskItemAdapter(private val onItemClickListener: OnItemClickListener) :
+class AllTaskItemAdapter(
+    private val onItemClickListener: OnItemClickListener
+) :
     ListAdapter<TaskEntity, AllTaskItemAdapter.AllTaskViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllTaskViewHolder {
+
+        val sharedPref =
+            parent.context?.getSharedPreferences("toDoPreference", Context.MODE_PRIVATE)
+        val isMyValueChecked = sharedPref!!.getBoolean("checkbox", false)
+
         return AllTaskViewHolder(
             ItemTaskBinding.inflate(LayoutInflater.from(parent.context)),
-            onItemClickListener
+            onItemClickListener,
+            isMyValueChecked
         )
     }
 
     override fun onBindViewHolder(holder: AllTaskViewHolder, position: Int) {
         val taskItem: TaskEntity = getItem(position)
         holder.bind(taskItem)
+
+        /*   holder.itemView.setOnClickListener { view ->
+               val sharedPreferences: SharedPreferences = view.context
+                   .getSharedPreferences("My preference", Context.MODE_PRIVATE)
+              val editor = sharedPreferences.edit()
+              editor.putBoolean("checkbox", holder.itemView.isChecked())
+              editor.apply()
+            //  Handler().postDelayed({ listener.onItemClick(items.get(position)) }, 400)*//*
+        }
+        holder.c.setChecked(isMyValueChecked)*/
     }
 
     class AllTaskViewHolder(
         private var binding: ItemTaskBinding,
-        private val onItemClickListener: OnItemClickListener
+        private val onItemClickListener: OnItemClickListener,
+        private val ismyValueCheck: Boolean
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(taskEntity: TaskEntity) {
             with(binding) {
-                checkBox.text = taskEntity.title
+                tvTitle.text = taskEntity.title
 
-                checkBox.setOnCheckedChangeListener() { checkBox, isChecked ->
+                checkBox.isChecked = ismyValueCheck
+
+                checkBox.setOnCheckedChangeListener { checkBox, isChecked ->
                     if (checkBox.isChecked) {
-                        onItemClickListener.onCheck(taskEntity, true)
-
-                    } else if (checkBox.isClickable) {
-                        onItemClickListener.onCheckDetail(taskEntity)
+                        val sharedPreferences: SharedPreferences = checkBox.context
+                            .getSharedPreferences("toDoPreference", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("checkbox", isChecked)
+                        editor.apply()
                     }
+                }
 
-                    // onItemClickListener.invoke(taskEntity)
+                tvTitle.setOnClickListener {
+                    checkBox.isChecked = checkBox.isChecked == true
+                    onItemClickListener.onCheckDetail(taskEntity)
                 }
             }
         }

@@ -4,37 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
 
-    <TextView
-        android:id="@+id/header_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="edit_blank_fragment"
-        android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_big"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_white_24" />
+
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/edit_task"
+            android:textAppearance="@style/Theme.ToDo.Headline" />
+
+    </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header_title"
-        android:textSize="18sp"/>
+        android:layout_below="@id/rl_toolbar"
+        android:layout_marginStart="@dimen/margin_big"
+        android:textAppearance="@style/Theme.ToDo.SubTitle"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etTitle"
-        android:textSize="18sp"/>
+        android:layout_marginStart="@dimen/margin_big"
+        android:textAppearance="@style/Theme.ToDo.Body"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:clickable="true"
         android:src="@drawable/ic_baseline_check_24" />
 
 </RelativeLayout>

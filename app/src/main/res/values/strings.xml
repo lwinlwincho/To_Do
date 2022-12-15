@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">To Do</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all_task">All Task</string>
+    <string name="new_task">New Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="detail_task">Detail Task</string>
     <string name="title">Title</string>
     <string name="task">Enter your task</string>
 </resources>

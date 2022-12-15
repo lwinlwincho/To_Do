@@ -26,7 +26,7 @@ class DetailTaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDetailTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,17 +46,21 @@ class DetailTaskFragment : Fragment() {
                 else -> {}
             }
         }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 
     private fun bind(item: TaskEntity) {
         with(binding) {
-            title.text = item.title
-            task.text = item.task
+            tvTitle.text = item.title
+            tvTask.text = item.task
 
             floatingActionButton.setOnClickListener{
                 val action = DetailTaskFragmentDirections
-                    .actionDetailTaskFragmentToEditTaskFragment(item.id.toLong())
+                    .actionDetailTaskFragmentToEditTaskFragment(item.id)
                 findNavController().navigate(action)
             }
         }
