@@ -29,6 +29,15 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
             }
         }
     }
+
+    fun completeTask(taskEntity: TaskEntity) {
+        viewModelScope.launch {
+            taskDao.completeTask(
+                id = taskEntity.id,
+                isComplete = taskEntity.isComplete
+            )
+        }
+    }
 }
 
 sealed class DetailTaskEvent {

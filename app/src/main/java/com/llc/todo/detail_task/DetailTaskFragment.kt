@@ -54,12 +54,17 @@ class DetailTaskFragment : Fragment() {
 
 
     private fun bind(item: TaskEntity) {
+
         with(binding) {
             tvTitle.text = item.title
             tvTask.text = item.task
             checkBox.isChecked = item.isComplete
 
-            floatingActionButton.setOnClickListener{
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.completeTask(item.copy(isComplete = isChecked))
+            }
+
+            floatingActionButton.setOnClickListener {
                 val action = DetailTaskFragmentDirections
                     .actionDetailTaskFragmentToEditTaskFragment(item.id)
                 findNavController().navigate(action)

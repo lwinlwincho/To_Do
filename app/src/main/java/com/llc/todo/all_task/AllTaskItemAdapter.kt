@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.llc.todo.database.TaskEntity
 import com.llc.todo.databinding.ItemTaskBinding
 
-
 interface OnItemClickListener {
     fun onCompleteTask(taskEntity: TaskEntity)
     fun openDetails(taskEntity: TaskEntity)
@@ -41,10 +40,10 @@ class AllTaskItemAdapter(
             with(binding) {
                 tvTitle.text = taskEntity.title
                 checkBox.isChecked = taskEntity.isComplete
+
                 checkBox.setOnCheckedChangeListener { _, isChecked ->
                     onItemClickListener.onCompleteTask(taskEntity.copy(isComplete = isChecked))
                 }
-
                 tvTitle.setOnClickListener {
                     checkBox.isChecked = checkBox.isChecked == true
                     onItemClickListener.openDetails(taskEntity)
