@@ -57,6 +57,7 @@ class DetailTaskFragment : Fragment() {
         with(binding) {
             tvTitle.text = item.title
             tvTask.text = item.task
+            checkBox.isChecked = item.isComplete
 
             floatingActionButton.setOnClickListener{
                 val action = DetailTaskFragmentDirections
