@@ -6,4 +6,9 @@
     <string name="detail_task">Detail Task</string>
     <string name="title">Title</string>
     <string name="task">Enter your task</string>
+    <string name="clear_completed">Clear completed</string>
+    <string name="refresh">Refresh</string>
+    <string name="all">All</string>
+    <string name="active">Active</string>
+    <string name="completed">Completed</string>
 </resources>

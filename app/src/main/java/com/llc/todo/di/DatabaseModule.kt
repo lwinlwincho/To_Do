@@ -2,8 +2,8 @@ package com.llc.todo.di
 
 import android.content.Context
 import androidx.room.Room
-import com.llc.todo.database.TaskDao
-import com.llc.todo.database.TaskDatabase
+import com.llc.todo.data.database.TaskDao
+import com.llc.todo.data.database.TaskDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ object DatabaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideMovieRoomDatabase(@ApplicationContext context: Context): TaskDatabase {
+    fun provideTaskRoomDatabase(@ApplicationContext context: Context): TaskDatabase {
         return Room.databaseBuilder(
             context,
             TaskDatabase::class.java,
@@ -29,7 +29,7 @@ object DatabaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideMovieDao(taskDatabase: TaskDatabase): TaskDao {
+    fun provideTaskDao(taskDatabase: TaskDatabase): TaskDao {
         return taskDatabase.taskDao()
     }
 }

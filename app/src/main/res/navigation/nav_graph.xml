@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allTaskFragment"
-        android:name="com.llc.todo.all_task.AllTaskFragment"
+        android:name="com.llc.todo.ui.ui.all_task.AllTaskFragment"
         android:label="fragment_all_task"
         tools:layout="@layout/fragment_all_task">
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
-        android:name="com.llc.todo.new_task.NewTaskFragment"
+        android:name="com.llc.todo.ui.ui.new_task.NewTaskFragment"
         android:label="fragment_new_task"
         tools:layout="@layout/fragment_new_task" />
     <fragment
         android:id="@+id/detailTaskFragment"
-        android:name="com.llc.todo.detail_task.DetailTaskFragment"
+        android:name="com.llc.todo.ui.ui.detail_task.DetailTaskFragment"
         android:label="fragment_detail_task"
         tools:layout="@layout/fragment_detail_task">
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/editTaskFragment"
-        android:name="com.llc.todo.edit_task.EditTaskFragment"
+        android:name="com.llc.todo.ui.ui.edit_task.EditTaskFragment"
         android:label="fragment_edit_task"
         tools:layout="@layout/fragment_edit_task">
         <action

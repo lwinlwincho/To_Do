@@ -1,4 +1,4 @@
-package com.llc.todo.database
+package com.llc.todo.data.database
 
 import androidx.room.*
 
@@ -6,7 +6,7 @@ import androidx.room.*
 interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertTask(item: TaskEntity)
+    suspend fun insertTask(item: TaskEntity)
 
     @Query("Update taskEntity Set title=:title ,task=:task Where id=:id")
     suspend fun updateTask(id: Long, title: String, task: String)
@@ -15,7 +15,16 @@ interface TaskDao {
     suspend fun completeTask(id: Long, isComplete: Boolean)
 
     @Delete
-    fun delete(item: TaskEntity)
+    suspend fun delete(item: TaskEntity)
+
+    @Query("Delete from taskEntity Where isComplete=:isComplete")
+    suspend fun clearTask(isComplete: Boolean)
+
+    @Query("Select * from taskEntity Where isComplete= :isComplete")
+    fun getTaskByComplete(isComplete: Boolean): List<TaskEntity>
+
+    @Query("Select * from taskEntity Where isComplete!= :isComplete")
+    fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
 
     @Query("Select * from taskEntity Where id= :id")
     fun getTaskById(id: Long): TaskEntity

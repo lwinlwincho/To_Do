@@ -1,4 +1,4 @@
-package com.llc.todo.edit_task
+package com.llc.todo.ui.ui.edit_task
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.llc.todo.database.TaskEntity
+import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentEditTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
 

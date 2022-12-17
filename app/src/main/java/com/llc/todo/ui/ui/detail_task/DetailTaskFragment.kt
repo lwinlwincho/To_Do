@@ -1,4 +1,4 @@
-package com.llc.todo.detail_task
+package com.llc.todo.ui.ui.detail_task
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.llc.todo.database.TaskEntity
+import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentDetailTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +35,7 @@ class DetailTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getTaskDetail(args.id.toString())
+        viewModel.getTaskDetail(args.id)
         viewModel.detailUIEvent.observe(viewLifecycleOwner) {
             when (it) {
                 is DetailTaskEvent.Success -> {

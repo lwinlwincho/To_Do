@@ -1,11 +1,11 @@
-package com.llc.todo.all_task
+package com.llc.todo.ui.ui.all_task
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.llc.todo.database.TaskEntity
+import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.ItemTaskBinding
 
 interface OnItemClickListener {

@@ -1,15 +1,15 @@
-package com.llc.todo.all_task
+package com.llc.todo.ui.ui.all_task
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.llc.todo.database.TaskEntity
+import com.llc.todo.R
+import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentAllTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +23,13 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     private val allTaskItemAdapter: AllTaskItemAdapter by lazy {
         AllTaskItemAdapter(this)
+    }
+
+        lateinit var task: TaskEntity
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -46,6 +53,9 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
                 is AllTaskEvent.SuccessComplete -> {
                     if (taskEvent.message.isNotBlank()) showMessage(taskEvent.message)
                 }
+                is AllTaskEvent.SuccessClearCompleteTask -> {
+                    if (taskEvent.message.isNotBlank()) showMessage(taskEvent.message)
+                }
                 is AllTaskEvent.Failure -> {
                     showMessage(taskEvent.message)
                 }
@@ -65,6 +75,42 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.layout_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_clear_completed -> {
+              //  viewModel.clearCompletedTask(task.isComplete)
+                Toast.makeText(context, "ClearCompleter", Toast.LENGTH_LONG).show()
+                return true
+            }
+            R.id.action_refresh -> {
+                Toast.makeText(context, "Refresh", Toast.LENGTH_LONG).show()
+                return true
+            }
+            R.id.action_all -> {
+                viewModel.getAllTask()
+                Toast.makeText(context, "All", Toast.LENGTH_LONG).show()
+                return true
+            }
+            R.id.action_active -> {
+                Toast.makeText(context, "Active", Toast.LENGTH_LONG).show()
+                return true
+            }
+            R.id.action_completed -> {
+                Toast.makeText(context, "Completed", Toast.LENGTH_LONG).show()
+                return true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun showMessage(message: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(message)
@@ -74,8 +120,8 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     override fun onCompleteTask(taskEntity: TaskEntity) {
         viewModel.completeTask(taskEntity)
+        task = taskEntity
     }
-
     override fun openDetails(taskEntity: TaskEntity) {
         goToDetails(taskEntity)
     }

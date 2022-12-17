@@ -1,4 +1,4 @@
-package com.llc.todo.new_task
+package com.llc.todo.ui.ui.new_task
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,11 +1,11 @@
-package com.llc.todo.edit_task
+package com.llc.todo.ui.ui.edit_task
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.llc.todo.database.TaskDao
-import com.llc.todo.database.TaskEntity
+import com.llc.todo.data.database.TaskDao
+import com.llc.todo.data.database.TaskEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
