@@ -25,7 +25,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         AllTaskItemAdapter(this)
     }
 
-    lateinit var task: TaskEntity
+   // lateinit var task: TaskEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,8 +122,8 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     override fun onCompleteTask(taskEntity: TaskEntity) {
         viewModel.completeTask(taskEntity)
-        task = taskEntity
     }
+
     override fun openDetails(taskEntity: TaskEntity) {
         goToDetails(taskEntity)
     }
