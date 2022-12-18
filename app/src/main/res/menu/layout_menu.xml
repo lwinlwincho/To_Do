@@ -12,12 +12,12 @@
         android:id="@+id/action_active"
         android:title="@string/active"
         android:orderInCategory="1"
-        app:showAsAction="never|withText" />
+        app:showAsAction="withText" />
     <item
         android:id="@+id/action_completed"
         android:title="@string/completed"
         android:orderInCategory="1"
-        app:showAsAction="never|withText" />
+        app:showAsAction="withText" />
 
     <item
         android:id="@+id/action_clear_completed"
@@ -29,6 +29,4 @@
         android:title="@string/refresh"
         app:showAsAction="withText"
         android:orderInCategory="2"/>
-
-
 </menu>
