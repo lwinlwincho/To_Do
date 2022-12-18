@@ -16,7 +16,7 @@ interface LocalDataSource {
 
     fun getTaskByComplete(isComplete: Boolean): List<TaskEntity>
 
-    fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
+    //fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
 
     fun getTaskById(id: Long): TaskEntity
 

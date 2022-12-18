@@ -29,17 +29,6 @@ class AllTaskViewModel @Inject constructor(private val localDataSource: LocalDat
         }
     }
 
-    fun getTaskCompleted(isComplete: Boolean) {
-        viewModelScope.launch {
-            try {
-                val result: List<TaskEntity> = localDataSource.getTaskByComplete(isComplete)
-                _taskEvent.value = AllTaskEvent.SuccessCompleteTask(result)
-            } catch (e: Exception) {
-                _taskEvent.value = AllTaskEvent.Failure(e.message.toString())
-            }
-        }
-    }
-
     fun completeTask(taskEntity: TaskEntity) {
         viewModelScope.launch {
             try {
@@ -53,6 +42,17 @@ class AllTaskViewModel @Inject constructor(private val localDataSource: LocalDat
                     _taskEvent.postValue(AllTaskEvent.SuccessComplete("Task marked active!"))
             } catch (e: Exception) {
                 _taskEvent.postValue(AllTaskEvent.Failure(e.message.toString()))
+            }
+        }
+    }
+
+    fun getTaskCompleted(isComplete: Boolean) {
+        viewModelScope.launch {
+            try {
+                val result: List<TaskEntity> = localDataSource.getTaskByComplete(isComplete)
+                _taskEvent.value = AllTaskEvent.SuccessCompleteTask(result)
+            } catch (e: Exception) {
+                _taskEvent.value = AllTaskEvent.Failure(e.message.toString())
             }
         }
     }

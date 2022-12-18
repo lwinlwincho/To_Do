@@ -25,7 +25,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         AllTaskItemAdapter(this)
     }
 
-        lateinit var task: TaskEntity
+    lateinit var task: TaskEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,10 +98,12 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
                 return true
             }
             R.id.action_active -> {
+               // viewModel.getTaskCompleted(!task.isComplete)
                 Toast.makeText(context, "Active", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_completed -> {
+               // viewModel.getTaskCompleted(task.isComplete)
                 Toast.makeText(context, "Completed", Toast.LENGTH_LONG).show()
                 return true
             }

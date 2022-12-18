@@ -44,6 +44,10 @@ class DetailTaskFragment : Fragment() {
                 is DetailTaskEvent.SuccessComplete -> {
                     showMessage(it.message)
                 }
+                is DetailTaskEvent.SuccessDelete -> {
+                    showMessage(it.message)
+                    findNavController().navigateUp()
+                }
                 is DetailTaskEvent.Failure -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
@@ -71,6 +75,10 @@ class DetailTaskFragment : Fragment() {
                 val action = DetailTaskFragmentDirections
                     .actionDetailTaskFragmentToEditTaskFragment(item.id)
                 findNavController().navigate(action)
+            }
+
+            imvDelete.setOnClickListener{
+                viewModel.deleteTask(item)
             }
         }
     }

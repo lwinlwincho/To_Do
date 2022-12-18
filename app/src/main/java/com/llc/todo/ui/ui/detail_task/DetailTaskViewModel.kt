@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llc.todo.data.database.TaskDao
 import com.llc.todo.data.database.TaskEntity
+import com.llc.todo.data.repository.LocalDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
+class DetailTaskViewModel @Inject constructor(private val localDataSource: LocalDataSource) :
+    ViewModel() {
 
     private val _detailUIEvent = MutableLiveData<DetailTaskEvent>()
     val detailUIEvent: LiveData<DetailTaskEvent> = _detailUIEvent
@@ -19,7 +21,7 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
     fun getTaskDetail(taskId: Long) {
         viewModelScope.launch {
             try {
-                val result = taskDao.getTaskById(taskId)
+                val result = localDataSource.getTaskById(taskId)
                 _detailUIEvent.value = DetailTaskEvent.Success(result)
             } catch (e: Exception) {
                 _detailUIEvent.value = DetailTaskEvent.Failure(e.message.toString())
@@ -30,7 +32,7 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
     fun completeTask(taskEntity: TaskEntity) {
         viewModelScope.launch {
             try {
-                taskDao.completeTask(
+                localDataSource.completeTask(
                     id = taskEntity.id,
                     isComplete = taskEntity.isComplete
                 )
@@ -43,10 +45,22 @@ class DetailTaskViewModel @Inject constructor(private val taskDao: TaskDao) : Vi
             }
         }
     }
+
+    fun deleteTask(taskEntity: TaskEntity) {
+        viewModelScope.launch {
+            try {
+                localDataSource.delete(taskEntity)
+                _detailUIEvent.postValue(DetailTaskEvent.SuccessDelete("Task was deleted!"))
+            } catch (e: java.lang.Exception) {
+                _detailUIEvent.postValue(DetailTaskEvent.Failure(e.message.toString()))
+            }
+        }
+    }
 }
 
 sealed class DetailTaskEvent {
     data class Success(val taskEntity: TaskEntity) : DetailTaskEvent()
     data class SuccessComplete(val message: String) : DetailTaskEvent()
+    data class SuccessDelete(val message: String) : DetailTaskEvent()
     data class Failure(val message: String) : DetailTaskEvent()
 }

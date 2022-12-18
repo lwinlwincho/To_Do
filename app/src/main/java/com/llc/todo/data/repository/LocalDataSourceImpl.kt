@@ -19,7 +19,7 @@ class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : Lo
     }
 
     override suspend fun delete(item: TaskEntity) {
-        taskDao.delete(item)
+        taskDao.deleteTask(item)
     }
 
     override suspend fun clearTask(isComplete: Boolean) {
@@ -34,9 +34,9 @@ class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : Lo
         return taskDao.getTaskByComplete(isComplete)
     }
 
-    override fun getTaskByActive(isComplete: Boolean): List<TaskEntity> {
+   /* override fun getTaskByActive(isComplete: Boolean): List<TaskEntity> {
         return taskDao.getTaskByActive(isComplete)
-    }
+    }*/
 
     override fun getAllTask(): List<TaskEntity> {
         return taskDao.getAllTask()
