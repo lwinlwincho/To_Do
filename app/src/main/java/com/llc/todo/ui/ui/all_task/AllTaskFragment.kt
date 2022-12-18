@@ -25,7 +25,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         AllTaskItemAdapter(this)
     }
 
-   // lateinit var task: TaskEntity
+    // lateinit var task: TaskEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +84,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         return when (item.itemId) {
 
             R.id.action_clear_completed -> {
-              //  viewModel.clearCompletedTask(task.isComplete)
+                viewModel.clearCompletedTask()
                 Toast.makeText(context, "ClearCompleter", Toast.LENGTH_LONG).show()
                 return true
             }
@@ -98,12 +98,12 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
                 return true
             }
             R.id.action_active -> {
-               // viewModel.getTaskCompleted(!task.isComplete)
+                // viewModel.getTaskCompleted(!task.isComplete)
                 Toast.makeText(context, "Active", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_completed -> {
-               // viewModel.getTaskCompleted(task.isComplete)
+                // viewModel.getTaskCompleted(task.isComplete)
                 Toast.makeText(context, "Completed", Toast.LENGTH_LONG).show()
                 return true
             }

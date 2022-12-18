@@ -12,7 +12,7 @@ interface LocalDataSource {
 
     suspend fun delete(item: TaskEntity)
 
-    suspend fun clearTask(isComplete: Boolean)
+    suspend fun clearCompleteTask()
 
     fun getTaskByComplete(isComplete: Boolean): List<TaskEntity>
 

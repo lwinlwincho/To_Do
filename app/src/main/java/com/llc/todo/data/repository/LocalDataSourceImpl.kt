@@ -22,8 +22,8 @@ class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : Lo
         taskDao.deleteTask(item)
     }
 
-    override suspend fun clearTask(isComplete: Boolean) {
-        taskDao.clearTask(isComplete)
+    override suspend fun clearCompleteTask() {
+        taskDao.clearCompleteTask()
     }
 
     override fun getTaskById(id: Long): TaskEntity {

@@ -57,10 +57,10 @@ class AllTaskViewModel @Inject constructor(private val localDataSource: LocalDat
         }
     }
 
-    fun clearCompletedTask(isComplete: Boolean) {
+    fun clearCompletedTask() {
         viewModelScope.launch {
             try {
-                localDataSource.clearTask(isComplete)
+                localDataSource.clearCompleteTask()
                 _taskEvent.value = AllTaskEvent.SuccessClearCompleteTask("Completed tasks cleared")
             } catch (e: Exception) {
                 _taskEvent.value = AllTaskEvent.Failure(e.message.toString())

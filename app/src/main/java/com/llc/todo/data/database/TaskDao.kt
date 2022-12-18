@@ -17,15 +17,15 @@ interface TaskDao {
     @Delete
     suspend fun deleteTask(item: TaskEntity)
 
-    @Query("Delete from taskEntity Where isComplete=:isComplete")
-    suspend fun clearTask(isComplete: Boolean)
+    @Query("Delete from taskEntity Where isComplete= 1")
+    suspend fun clearCompleteTask()
 
     @Query("Select * from taskEntity Where isComplete= :isComplete")
     fun getTaskByComplete(isComplete: Boolean): List<TaskEntity>
 
-  /*  @Query("Select * from taskEntity Where isComplete!= :isComplete")
-    fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
-*/
+    /*  @Query("Select * from taskEntity Where isComplete!= :isComplete")
+      fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
+  */
 
     @Query("Select * from taskEntity Where id= :id")
     fun getTaskById(id: Long): TaskEntity
