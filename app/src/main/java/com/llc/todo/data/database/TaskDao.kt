@@ -1,6 +1,7 @@
 package com.llc.todo.data.database
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -32,4 +33,7 @@ interface TaskDao {
 
     @Query("Select * from taskEntity")
     fun getAllTask(): List<TaskEntity>
+
+    @Query("Select * from taskEntity")
+    fun observeTasks(): Flow<List<TaskEntity>>
 }

@@ -42,7 +42,6 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.getAllTask()
         viewModel.taskEvent.observe(viewLifecycleOwner) { taskEvent ->
             when (taskEvent) {

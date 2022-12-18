@@ -1,6 +1,7 @@
 package com.llc.todo.data.repository
 
 import com.llc.todo.data.database.TaskEntity
+import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
@@ -21,4 +22,6 @@ interface LocalDataSource {
     fun getTaskById(id: Long): TaskEntity
 
     fun getAllTask(): List<TaskEntity>
+
+    val allTasksSteam: Flow<List<TaskEntity>>
 }

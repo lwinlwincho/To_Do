@@ -3,6 +3,7 @@ package com.llc.todo.data.repository
 import com.llc.todo.data.database.TaskDao
 import com.llc.todo.data.database.TaskEntity
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : LocalDataSource {
 
@@ -34,11 +35,14 @@ class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : Lo
         return taskDao.getTaskByComplete(isComplete)
     }
 
-   /* override fun getTaskByActive(isComplete: Boolean): List<TaskEntity> {
-        return taskDao.getTaskByActive(isComplete)
-    }*/
+    /* override fun getTaskByActive(isComplete: Boolean): List<TaskEntity> {
+         return taskDao.getTaskByActive(isComplete)
+     }*/
 
     override fun getAllTask(): List<TaskEntity> {
         return taskDao.getAllTask()
     }
+
+    override val allTasksSteam: Flow<List<TaskEntity>>
+        get() = taskDao.observeTasks()
 }

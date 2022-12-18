@@ -3,6 +3,7 @@ package com.llc.todo.ui.ui.all_task
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.data.repository.LocalDataSource
@@ -10,6 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 class AllTaskViewModel @Inject constructor(private val localDataSource: LocalDataSource) :
@@ -21,8 +25,9 @@ class AllTaskViewModel @Inject constructor(private val localDataSource: LocalDat
     fun getAllTask() {
         viewModelScope.launch {
             try {
-                val result: List<TaskEntity> = localDataSource.getAllTask()
-                _taskEvent.value = AllTaskEvent.Success(result)
+                localDataSource.allTasksSteam.collectLatest {
+                    _taskEvent.value = AllTaskEvent.Success(it)
+                }
             } catch (e: Exception) {
                 _taskEvent.value = AllTaskEvent.Failure(e.message.toString())
             }
