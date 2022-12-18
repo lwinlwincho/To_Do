@@ -3,30 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_all"
+        android:id="@+id/action_filter"
         android:icon="@drawable/ic_baseline_filter_list_24"
+        android:orderInCategory="1"
         android:title="@string/all"
-        android:orderInCategory="1"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_active"
-        android:title="@string/active"
-        android:orderInCategory="1"
-        app:showAsAction="withText" />
-    <item
-        android:id="@+id/action_completed"
-        android:title="@string/completed"
-        android:orderInCategory="1"
-        app:showAsAction="withText" />
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/action_all"
+                android:orderInCategory="1"
+                android:title="@string/all_task"
+                app:showAsAction="withText" />
+            <item
+                android:id="@+id/action_active"
+                android:orderInCategory="1"
+                android:title="@string/active"
+                app:showAsAction="withText" />
+            <item
+                android:id="@+id/action_completed"
+                android:orderInCategory="1"
+                android:title="@string/completed"
+                app:showAsAction="withText" />
+        </menu>
+    </item>
 
     <item
         android:id="@+id/action_clear_completed"
-        android:title="@string/clear_completed"
         android:orderInCategory="2"
+        android:title="@string/clear_completed"
         app:showAsAction="withText" />
     <item
         android:id="@+id/action_refresh"
+        android:orderInCategory="2"
         android:title="@string/refresh"
-        app:showAsAction="withText"
-        android:orderInCategory="2"/>
+        app:showAsAction="withText" />
 </menu>
