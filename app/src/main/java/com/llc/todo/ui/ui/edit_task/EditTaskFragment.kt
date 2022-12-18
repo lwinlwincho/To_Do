@@ -50,10 +50,6 @@ class EditTaskFragment : Fragment() {
                 }
             }
         }
-
-        binding.ivBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
     }
 
     private fun bind(item: TaskEntity) {

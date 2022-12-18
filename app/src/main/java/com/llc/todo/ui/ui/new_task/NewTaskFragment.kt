@@ -52,11 +52,8 @@ class NewTaskFragment : Fragment() {
             )
         }
 
-        binding.etTitle.setOnClickListener(){
+        binding.etTitle.setOnClickListener() {
 
-        }
-        binding.ivBack.setOnClickListener {
-            findNavController().navigateUp()
         }
     }
 

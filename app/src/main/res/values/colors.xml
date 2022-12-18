@@ -11,6 +11,7 @@
     <color name="grey">#D4D2D2</color>
     <color name="light_gery">#B2B3AD</color>
     <color name="pink">#D93769</color>
+    <color name="transparent">#00000000</color>
 </resources>
 <!--
 D93769-->
