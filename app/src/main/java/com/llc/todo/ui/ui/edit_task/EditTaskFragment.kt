@@ -68,6 +68,7 @@ class EditTaskFragment : Fragment() {
                 task = binding.etTask.text.toString()
             )
         }
+        else showMessage("Please edit your tasks!")
     }
 
     //return true if the edit text are not empty

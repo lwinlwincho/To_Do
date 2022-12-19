@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.R
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentAllTaskBinding
@@ -24,8 +23,6 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
     private val allTaskItemAdapter: AllTaskItemAdapter by lazy {
         AllTaskItemAdapter(this)
     }
-
-    // lateinit var task: TaskEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +43,43 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
         viewModel.taskEvent.observe(viewLifecycleOwner) { taskEvent ->
             when (taskEvent) {
 
+                is AllTaskEvent.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
                 is AllTaskEvent.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (taskEvent.taskList.isEmpty()) showMessage("You have no tasks!")
                     allTaskItemAdapter.submitList(taskEvent.taskList)
                 }
-                is AllTaskEvent.SuccessComplete -> {
+
+                is AllTaskEvent.SuccessGetCompleteTask -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (taskEvent.taskList.isEmpty()) showMessage("You have no completed tasks!")
+                    else allTaskItemAdapter.submitList(taskEvent.taskList)
+                }
+
+                is AllTaskEvent.SuccessGetActiveTask -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (taskEvent.taskList.isEmpty()) showMessage("You have no active tasks!")
+                     else allTaskItemAdapter.submitList(taskEvent.taskList)
+                }
+
+                is AllTaskEvent.SuccessUpdateComplete -> {
+                    binding.progressBar.visibility = View.GONE
                     if (taskEvent.message.isNotBlank()) showMessage(taskEvent.message)
                 }
+
                 is AllTaskEvent.SuccessClearCompleteTask -> {
+                    binding.progressBar.visibility = View.GONE
                     if (taskEvent.message.isNotBlank()) showMessage(taskEvent.message)
                 }
+
                 is AllTaskEvent.Failure -> {
+                    binding.progressBar.visibility = View.GONE
                     showMessage(taskEvent.message)
                 }
+
                 else -> {}
             }
         }
@@ -84,26 +106,22 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
             R.id.action_clear_completed -> {
                 viewModel.clearCompletedTask()
-                Toast.makeText(context, "ClearCompleter", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_refresh -> {
-                Toast.makeText(context, "Refresh", Toast.LENGTH_LONG).show()
+                viewModel.getAllTask()
                 return true
             }
             R.id.action_all -> {
                 viewModel.getAllTask()
-                Toast.makeText(context, "All", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_active -> {
-                // viewModel.getTaskCompleted(!task.isComplete)
-                Toast.makeText(context, "Active", Toast.LENGTH_LONG).show()
+                viewModel.getTaskActive()
                 return true
             }
             R.id.action_completed -> {
-                // viewModel.getTaskCompleted(task.isComplete)
-                Toast.makeText(context, "Completed", Toast.LENGTH_LONG).show()
+                viewModel.getTaskCompleted()
                 return true
             }
             else -> {
@@ -113,10 +131,15 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
     }
 
     private fun showMessage(message: String) {
-        MaterialAlertDialogBuilder(requireContext())
+        /*MaterialAlertDialogBuilder(requireContext())
             .setMessage(message)
             .setPositiveButton("Ok") { _, _ -> }
-            .show()
+            .show()*/
+
+        val toast:Toast= Toast.makeText(context,message,Toast.LENGTH_SHORT)
+        val toastView: View? = toast.getView()
+        toastView?.setBackgroundResource(R.drawable.toast)
+        toast.show()
     }
 
     override fun onCompleteTask(taskEntity: TaskEntity) {

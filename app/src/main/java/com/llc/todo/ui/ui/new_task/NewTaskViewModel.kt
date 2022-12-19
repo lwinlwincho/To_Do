@@ -16,6 +16,13 @@ class NewTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewM
     private var _newTaskUiEvent = MutableLiveData<NewTaskEvent>()
     val newTaskUiEvent: LiveData<NewTaskEvent> = _newTaskUiEvent
 
+    fun isEntryValid(title: String, task: String): Boolean {
+        if (title.isBlank() || task.isBlank()) {
+            return false
+        }
+        return true
+    }
+
     fun addNewTask(
         title: String,
         task: String

@@ -46,15 +46,26 @@ class NewTaskFragment : Fragment() {
         }
 
         binding.floatingActionButton.setOnClickListener {
-            viewModel.addNewTask(
-                title = binding.etTitle.text.toString(),
-                task = binding.etTask.text.toString()
-            )
+            if (isEntryValid()) {
+                viewModel.addNewTask(
+                    title = binding.etTitle.text.toString(),
+                    task = binding.etTask.text.toString()
+                )
+            }
+            else showMessage("Please fill your tasks!")
         }
 
         binding.etTitle.setOnClickListener() {
 
         }
+    }
+
+    //return true if the edit text are not empty
+    private fun isEntryValid(): Boolean {
+        return viewModel.isEntryValid(
+            binding.etTitle.text.toString(),
+            binding.etTask.text.toString()
+        )
     }
 
     private fun showMessage(message: String) {

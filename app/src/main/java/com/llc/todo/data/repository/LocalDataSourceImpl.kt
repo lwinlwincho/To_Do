@@ -31,18 +31,19 @@ class LocalDataSourceImpl @Inject constructor(private val taskDao: TaskDao) : Lo
         return taskDao.getTaskById(id)
     }
 
-    override fun getTaskByComplete(isComplete: Boolean): List<TaskEntity> {
-        return taskDao.getTaskByComplete(isComplete)
+    override fun getTaskByComplete(): List<TaskEntity> {
+        return taskDao.getTaskByComplete()
     }
 
-    /* override fun getTaskByActive(isComplete: Boolean): List<TaskEntity> {
-         return taskDao.getTaskByActive(isComplete)
-     }*/
+     override fun getTaskByActive(): List<TaskEntity> {
+         return taskDao.getTaskByActive()
+     }
 
-    override fun getAllTask(): List<TaskEntity> {
-        return taskDao.getAllTask()
-    }
-
-    override val allTasksSteam: Flow<List<TaskEntity>>
+    override val allTasksStream: Flow<List<TaskEntity>>
         get() = taskDao.observeTasks()
+
+    //if you use fun observeTasks()
+   /* override fun observeTasks(): Flow<List<TaskEntity>> {
+       return taskDao.observeTasks()
+    }*/
 }

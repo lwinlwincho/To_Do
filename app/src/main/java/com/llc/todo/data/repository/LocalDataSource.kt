@@ -15,13 +15,14 @@ interface LocalDataSource {
 
     suspend fun clearCompleteTask()
 
-    fun getTaskByComplete(isComplete: Boolean): List<TaskEntity>
-
-    //fun getTaskByActive(isComplete: Boolean): List<TaskEntity>
-
     fun getTaskById(id: Long): TaskEntity
 
-    fun getAllTask(): List<TaskEntity>
+    fun getTaskByComplete(): List<TaskEntity>
 
-    val allTasksSteam: Flow<List<TaskEntity>>
+    fun getTaskByActive(): List<TaskEntity>
+
+    val allTasksStream: Flow<List<TaskEntity>>
+
+   // you can either val allTasksStream or fun observeTasks().The results are the same.
+   // fun observeTasks(): Flow<List<TaskEntity>>
 }

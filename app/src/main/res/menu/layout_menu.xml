@@ -5,23 +5,19 @@
     <item
         android:id="@+id/action_filter"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:orderInCategory="1"
         android:title="@string/all"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/action_all"
-                android:orderInCategory="1"
                 android:title="@string/all_task"
                 app:showAsAction="withText" />
             <item
                 android:id="@+id/action_active"
-                android:orderInCategory="1"
                 android:title="@string/active"
                 app:showAsAction="withText" />
             <item
                 android:id="@+id/action_completed"
-                android:orderInCategory="1"
                 android:title="@string/completed"
                 app:showAsAction="withText" />
         </menu>

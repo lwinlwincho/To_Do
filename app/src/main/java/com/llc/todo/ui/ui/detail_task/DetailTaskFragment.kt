@@ -1,15 +1,14 @@
 package com.llc.todo.ui.ui.detail_task
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.llc.todo.R
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentDetailTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +22,13 @@ class DetailTaskFragment : Fragment() {
     private val viewModel: DetailTaskViewModel by viewModels()
 
     private val args: DetailTaskFragmentArgs by navArgs()
+
+    lateinit var task: TaskEntity
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +46,7 @@ class DetailTaskFragment : Fragment() {
             when (it) {
                 is DetailTaskEvent.Success -> {
                     bind(it.taskEntity)
+                    task=it.taskEntity
                 }
                 is DetailTaskEvent.SuccessComplete -> {
                     showMessage(it.message)
@@ -55,8 +62,26 @@ class DetailTaskFragment : Fragment() {
             }
         }
 
-        binding.ivBack.setOnClickListener {
+       /* binding.ivBack.setOnClickListener {
             findNavController().navigateUp()
+        }*/
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.detail_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_delete -> {
+                viewModel.deleteTask(task)
+                return true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 
@@ -77,9 +102,9 @@ class DetailTaskFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            imvDelete.setOnClickListener{
+            /*imvDelete.setOnClickListener{
                 viewModel.deleteTask(item)
-            }
+            }*/
         }
     }
 
