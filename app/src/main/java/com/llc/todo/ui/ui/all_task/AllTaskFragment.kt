@@ -1,5 +1,6 @@
 package com.llc.todo.ui.ui.all_task
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -7,10 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.llc.todo.AllTaskItemAdapter
+import com.llc.todo.OnItemClickListener
 import com.llc.todo.R
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentAllTaskBinding
+import com.llc.todo.extension.showCustomToast
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class AllTaskFragment : Fragment(), OnItemClickListener {
@@ -39,6 +44,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.getAllTask()
         viewModel.taskEvent.observe(viewLifecycleOwner) { taskEvent ->
             when (taskEvent) {
@@ -62,7 +68,7 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
                 is AllTaskEvent.SuccessGetActiveTask -> {
                     binding.progressBar.visibility = View.GONE
                     if (taskEvent.taskList.isEmpty()) showMessage("You have no active tasks!")
-                     else allTaskItemAdapter.submitList(taskEvent.taskList)
+                    else allTaskItemAdapter.submitList(taskEvent.taskList)
                 }
 
                 is AllTaskEvent.SuccessUpdateComplete -> {
@@ -136,11 +142,12 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
             .setPositiveButton("Ok") { _, _ -> }
             .show()*/
 
-        val toast:Toast= Toast.makeText(context,message,Toast.LENGTH_SHORT)
-        val toastView: View? = toast.getView()
-        toastView?.setBackgroundResource(R.drawable.toast)
-        toast.show()
+        Toast(requireContext()).showCustomToast (
+            message,
+            requireActivity()
+        )
     }
+
 
     override fun onCompleteTask(taskEntity: TaskEntity) {
         viewModel.completeTask(taskEntity)

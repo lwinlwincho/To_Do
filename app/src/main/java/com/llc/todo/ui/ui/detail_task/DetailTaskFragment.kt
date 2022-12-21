@@ -11,6 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.R
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentDetailTaskBinding
+import com.llc.todo.extension.showCustomToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -109,9 +110,14 @@ class DetailTaskFragment : Fragment() {
     }
 
     private fun showMessage(message: String) {
-        MaterialAlertDialogBuilder(requireContext())
+       /* MaterialAlertDialogBuilder(requireContext())
             .setMessage(message)
             .setPositiveButton("Ok") { _, _ -> }
-            .show()
+            .show()*/
+
+        Toast(requireContext()).showCustomToast (
+            message,
+            requireActivity()
+        )
     }
 }

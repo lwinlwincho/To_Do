@@ -1,4 +1,4 @@
-package com.llc.todo.ui.ui.all_task
+package com.llc.todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -8,16 +8,17 @@
         android:id="@+id/etTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_big"
-        android:textAppearance="@style/Theme.ToDo.SubTitle"/>
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:textAppearance="@style/Theme.ToDo.SubTitle" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etTitle"
-        android:layout_marginStart="@dimen/margin_big"
-        android:textAppearance="@style/Theme.ToDo.Body"/>
+        android:layout_marginStart="@dimen/margin_medium"
+        android:textAppearance="@style/Theme.ToDo.Body" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

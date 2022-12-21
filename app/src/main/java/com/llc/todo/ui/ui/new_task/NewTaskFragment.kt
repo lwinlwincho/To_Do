@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.databinding.FragmentNewTaskBinding
+import com.llc.todo.extension.showCustomToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,9 +71,13 @@ class NewTaskFragment : Fragment() {
     }
 
     private fun showMessage(message: String) {
-        MaterialAlertDialogBuilder(requireContext())
+        /*MaterialAlertDialogBuilder(requireContext())
             .setMessage(message)
             .setPositiveButton("Ok") { _, _ -> }
-            .show()
+            .show()*/
+        Toast(requireContext()).showCustomToast (
+            message,
+            requireActivity()
+        )
     }
 }
