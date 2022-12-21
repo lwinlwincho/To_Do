@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.llc.todo.R
 import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentDetailTaskBinding
@@ -62,10 +61,6 @@ class DetailTaskFragment : Fragment() {
                 else -> {}
             }
         }
-
-       /* binding.ivBack.setOnClickListener {
-            findNavController().navigateUp()
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -102,19 +97,10 @@ class DetailTaskFragment : Fragment() {
                     .actionDetailTaskFragmentToEditTaskFragment(item.id)
                 findNavController().navigate(action)
             }
-
-            /*imvDelete.setOnClickListener{
-                viewModel.deleteTask(item)
-            }*/
         }
     }
 
     private fun showMessage(message: String) {
-       /* MaterialAlertDialogBuilder(requireContext())
-            .setMessage(message)
-            .setPositiveButton("Ok") { _, _ -> }
-            .show()*/
-
         Toast(requireContext()).showCustomToast (
             message,
             requireActivity()

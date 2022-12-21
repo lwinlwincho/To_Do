@@ -1,6 +1,5 @@
 package com.llc.todo.ui.ui.all_task
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -15,7 +14,6 @@ import com.llc.todo.data.database.TaskEntity
 import com.llc.todo.databinding.FragmentAllTaskBinding
 import com.llc.todo.extension.showCustomToast
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class AllTaskFragment : Fragment(), OnItemClickListener {
@@ -137,17 +135,12 @@ class AllTaskFragment : Fragment(), OnItemClickListener {
     }
 
     private fun showMessage(message: String) {
-        /*MaterialAlertDialogBuilder(requireContext())
-            .setMessage(message)
-            .setPositiveButton("Ok") { _, _ -> }
-            .show()*/
 
         Toast(requireContext()).showCustomToast (
             message,
             requireActivity()
         )
     }
-
 
     override fun onCompleteTask(taskEntity: TaskEntity) {
         viewModel.completeTask(taskEntity)
